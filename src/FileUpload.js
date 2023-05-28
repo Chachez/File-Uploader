@@ -1,22 +1,15 @@
 import React, { Fragment, useCallback, useState, useMemo } from "react";
 import {
   FileCard,
-  FileUploader,
-  Pane,
   Alert,
   FileRejectionReason,
   majorScale,
   rebaseFiles,
 } from "evergreen-ui";
-import {
-  TextField,
-  Button,
-  Paper,
-  Typography,
-  DialogActions,
-  Grid,
-} from "@mui/material";
+import { Paper } from "@mui/material";
 import { styled } from "@mui/system";
+import { mimeTypesArray } from "./mimeTypes";
+import FileUploadComponent from "./components/FIleUploadComponent";
 
 const RootComponent = styled("div")(({ theme }) => ({
   maxWidth: "60%",
@@ -40,7 +33,7 @@ const PaperComponent = styled(Paper)(({ theme }) => ({
 }));
 
 const FileUpload = () => {
-  const acceptedMimeTypes = ["*"];
+  const acceptedMimeTypes = mimeTypesArray;
   const maxFiles = 5;
   const maxSizeInBytes = 50 * 1024 ** 2; // 50 MB
   const [files, setFiles] = useState([]);
@@ -85,10 +78,10 @@ const FileUpload = () => {
   return (
     <RootComponent>
       <PaperComponent>
-        <FileUploader
+        <FileUploadComponent
           acceptedMimeTypes={acceptedMimeTypes}
           label="Upload Files"
-          description="You can upload up to 5 files. Files can be up to 50MB. You can upload .jpg and .pdf file formats."
+          description="You can upload up to 5 files. Files can be up to 50MB."
           disabled={files.length + fileRejections.length >= maxFiles}
           maxSizeInBytes={maxSizeInBytes}
           maxFiles={maxFiles}
